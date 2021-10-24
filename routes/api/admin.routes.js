@@ -7,6 +7,7 @@ router.post('/login', adminController.login)
 router.post('/verify', adminController.verify)
 router.post('/add', adminController.addAdmin)
 router.post('/save', adminController.saveData)
+router.post('/save-answer', adminController.saveAnswer)
 router.post('/get', adminController.getData)
 
 module.exports = router

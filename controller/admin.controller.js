@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const secret = process.env.SECRET
 const Question = require('../model/question.model')
+const Answer = require('../model/answer.model')
 exports.login = async (req, res) => {
     try {
         let {body} = req
@@ -117,6 +118,31 @@ exports.saveData = async (req, res) => {
             return res.status(404).send({
                 error: true,
                 msg: 'Question creation unsuccessful'
+            })
+        }
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: 'Server failed'
+        })
+    }
+}
+
+exports.saveAnswer = async (req, res) => {
+    try {
+        let {body} = req
+        const questionAdd = new Answer(body)
+        const nQuestion = await questionAdd.save()
+        if(nQuestion) {
+            return res.status(200).send({
+                error: false,
+                msg: 'Answer added successful',
+                data: nQuestion
+            })
+        } else {
+            return res.status(404).send({
+                error: true,
+                msg: 'Answer creation unsuccessful'
             })
         }
     } catch (e) {
