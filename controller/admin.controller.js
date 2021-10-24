@@ -187,3 +187,36 @@ exports.getData = async (req, res) => {
         })
     }
 }
+
+exports.getAllQuestion = async (req, res) => {
+    try {
+        let {user} = res.locals
+        if(user._id){
+            let data = await Question.find({
+                user: user._id
+            })
+            if(data) {
+                return res.status(200).send({
+                    error: false,
+                    msg: 'Questions get successful',
+                    data: data
+                })
+            } else {
+                return res.status(404).send({
+                    error: true,
+                    msg: 'Questions get unsuccessful'
+                })
+            }
+        }else{
+            return res.status(404).send({
+                error: true,
+                msg: 'You are not authenticated'
+            })
+        }
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: 'Server failed'
+        })
+    }
+}
