@@ -220,3 +220,28 @@ exports.getAllQuestion = async (req, res) => {
         })
     }
 }
+
+exports.getAllAnswer = async (req, res) => {
+    try {
+        let data = await Answer.find({
+            question_id: req.body._id
+        })
+        if(data) {
+            return res.status(200).send({
+                error: false,
+                msg: 'Answers get successful',
+                data: data
+            })
+        } else {
+            return res.status(404).send({
+                error: true,
+                msg: 'Answers get unsuccessful'
+            })
+        }
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: 'Server failed'
+        })
+    }
+}
