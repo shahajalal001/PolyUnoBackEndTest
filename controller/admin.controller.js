@@ -104,20 +104,31 @@ exports.addAdmin = async (req, res) => {
 
 exports.saveData = async (req, res) => {
     try {
-        let {body} = req
-        let data = {question: body}
-        const questionAdd = new Question(data)
-        const nQuestion = await questionAdd.save()
-        if(nQuestion) {
-            return res.status(200).send({
-                error: false,
-                msg: 'Question added successful',
-                data: nQuestion
-            })
-        } else {
+        let {user} = res.locals
+        if(user._id){
+            let {body} = req
+            let data = {
+                user: user._id,
+                question: body
+            }
+            const questionAdd = new Question(data)
+            const nQuestion = await questionAdd.save()
+            if(nQuestion) {
+                return res.status(200).send({
+                    error: false,
+                    msg: 'Question added successful',
+                    data: nQuestion
+                })
+            } else {
+                return res.status(404).send({
+                    error: true,
+                    msg: 'Question creation unsuccessful'
+                })
+            }
+        }else{
             return res.status(404).send({
                 error: true,
-                msg: 'Question creation unsuccessful'
+                msg: 'You are not authenticated'
             })
         }
     } catch (e) {
