@@ -11,4 +11,5 @@ router.post('/save-answer', adminController.saveAnswer)
 router.post('/get', adminController.getData)
 router.post('/get-questions', adminController.getAllQuestion)
 router.post('/get-answers', adminController.getAllAnswer)
+router.post('/file-upload', adminController.fileUpload)
 module.exports = router

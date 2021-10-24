@@ -245,3 +245,18 @@ exports.getAllAnswer = async (req, res) => {
         })
     }
 }
+
+exports.fileUpload = async (req, res) => {
+    try {
+        return res.status(200).send({
+            error: false,
+            msg: 'Answers get successful',
+            data: req.file.filename
+        })
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: 'Server failed'
+        })
+    }
+}
